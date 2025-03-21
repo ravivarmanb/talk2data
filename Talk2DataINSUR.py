@@ -22,7 +22,7 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 def initialize_db_connection():
     # Connect to the SQL database
-    db = SQLDatabase.from_uri("sqlite:///.\data\insurance_company.db")
+    db = SQLDatabase.from_uri("sqlite:///./data/insurance_company.db")
     
     return db
 
