@@ -22,7 +22,7 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 def initialize_db_connection():
     # Connect to the SQL database
-    db = SQLDatabase.from_uri("sqlite:///./data/insurance_company.db")
+    db = SQLDatabase.from_uri("sqlite:///./data/newSynthetic70k.db")
     
     return db
 
@@ -94,7 +94,7 @@ def build_few_shots_prompt(db,chat_history=None):
     You can order the results by a relevant column to return the most interesting examples in the database.
     Never query for all the columns from a specific table, only ask for the relevant columns given the question.
     Also, the SQL code should not have ``` in the beginning or end and no 'sql' word in the output.
-
+    You SHOULD respond ONLY the SQL QUERY, DO NOT RESPOND ANY SPECIAL CHARACTERS BEFORE OR AFTER THE SQL QUERY.
     You MUST double-check your query before executing it. If you get an error while executing a query, rewrite the query and try again.
 
     DO NOT make any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database.
@@ -206,6 +206,7 @@ def main():
                     time.sleep(0.05)
                     response_placeholder.markdown(full_response + "▌")
                 response_placeholder.markdown(full_response)
+                st.write(sql_query)
 
             
             st.session_state.chat_history.append({"role": "assistant", "content": answer})
